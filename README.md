@@ -1,7 +1,7 @@
 # PropSnatch - An MFFU Giveaway Exploit
 
 <p align="center">
-  <img src="assets/preview.jpg" alt="PropSnatch Preview"/>
+  <img src="assets/preview.png" alt="PropSnatch Preview"/>
 </p>
 
 ---
@@ -38,3 +38,4 @@ PropSnatch is an automated tool designed to monitor a specific region of the scr
 This code is being released **as-is**. I have explained its purpose and functionality, but from this point forward, it is now on you to be able to run it.
 
 **I no longer have any involvement in this project.** I will not be providing support, updates, or any further assistance.
+
