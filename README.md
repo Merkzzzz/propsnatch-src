@@ -1,7 +1,7 @@
 # PropSnatch - An MFFU Giveaway Exploit
 
 <p align="center">
-  <img src="assets/preview.png" alt="PropSnatch Preview"/>
+  <img src="assets/preview.jpg" alt="PropSnatch Preview"/>
 </p>
 
 ---
@@ -10,7 +10,7 @@
 
 I am releasing the source code for **PropSnatch** for two primary reasons:
 
-1.  **To end the theft and misrepresentation of my work.** Several individuals have attempted to steal this code, rebrand it, and sell it as their own, while discrediting me as the original developer. By making this code public, I am ensuring that the truth is known and that no one can profit from dishonesty. This project is now open, and the credit is rightfully restored.
+1.  **To end the theft and misrepresentation of my work.** This release is intended to eradicate people who steal credit for work that is rightfully mine. Individuals like **bajgos and king** have attempted to steal this code, rebrand it, and sell it as their own, while discrediting me as the main person behind it. By making this code public, I am ensuring that the truth is known and that no one can profit from my work dishonestly.
 
 2.  **To bring attention to a significant vulnerability** in the MyFundedFutures (MFFU) giveaway system. It is my sincere hope that the team at [MyFundedFutures](https://myfundedfutures.com) will see this and take the necessary steps to patch their system, so that exploits like this are no longer possible. Fair and secure systems benefit everyone.
 
@@ -27,9 +27,14 @@ PropSnatch is an automated tool designed to monitor a specific region of the scr
 
 ---
 
+### Keywords
+
+`myfundedfutures`, `mffu`, `myfundedfutures github`, `mffu github`, `giveaway sniper`, `free mffu evals`, `free mffu giveaway`, `myfundedfutures giveaway`, `mffu giveaway sniper`, `mffu exploit`, `myfundedfutures exploit`, `mffu automation`, `myfundedfutures bot`, `code sniper`, `auto redeemer`, `mffu sniper`, `mffu eval bot`, `myfundedfutures eval`
+
+---
+
 ### Disclaimer
 
 This code is being released **as-is**. I have explained its purpose and functionality, but from this point forward, it is now on you to be able to run it.
 
 **I no longer have any involvement in this project.** I will not be providing support, updates, or any further assistance.
-
