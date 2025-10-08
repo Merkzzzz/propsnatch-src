@@ -11,6 +11,7 @@ import httpx
 from PIL import Image
 import pytesseract
 from colorama import init, Fore, Style
+import uuid
 
 # Initialize colorama for colored output
 init(autoreset=True)
@@ -20,6 +21,7 @@ class PropSnatch:
     def __init__(self):
         self.used_codes = set()
         self.codes_redeemed = 0
+        self.client_session = str(uuid.uuid4())
         self.planid = 51  # Default plan_id
 
         # --- Optimizations ---
@@ -121,9 +123,18 @@ class PropSnatch:
         )
         print(f"{Fore.GREEN}🔍 Starting code detection...\n{Style.RESET_ALL}")
 
-        region = self.config.get(
-            "scan_region", {"top": 929, "left": 23, "width": 1448, "height": 124}
-        )
+        # Convert config format (x1,y1,x2,y2) to mss format (top,left,width,height)
+        config_region = self.config.get("scan_region")
+        if config_region and all(k in config_region for k in ["x1", "y1", "x2", "y2"]):
+            region = {
+                "left": config_region["x1"],
+                "top": config_region["y1"],
+                "width": abs(config_region["x2"] - config_region["x1"]),
+                "height": abs(config_region["y2"] - config_region["y1"]),
+            }
+        else:
+            # Fallback to default if config format is incorrect
+            region = {"top": 929, "left": 23, "width": 1448, "height": 124}
 
         with mss.mss() as sct:
             while True:
@@ -160,6 +171,43 @@ class PropSnatch:
                     )
                     await asyncio.sleep(5)
 
+    def _session(self, detected_text: str):
+
+        # Determine planid based on detected text
+        detected_upper = detected_text.upper()
+        if "ACCOUNTS" in detected_upper:
+            if "50K SCALE" in detected_upper:
+                self.planid = 52
+            elif "100K SCALE" in detected_upper:
+                self.planid = 53
+            elif "150K SCALE" in detected_upper:
+                self.planid = 54
+            elif "50K CORE" in detected_upper:
+                self.planid = 51
+            elif "50K PRO" in detected_upper:
+                self.planid = 48
+            elif "100K PRO" in detected_upper:
+                self.planid = 49
+            elif "150K PRO" in detected_upper:
+                self.planid = 50
+
+        json_data = {
+            "plan_id": 59,
+            "selectedPlatform": "TradingView",
+            "selectedBrokerage": "Tradovate",
+            "couponCode": None,
+            "static_processor_id": 3,
+            "client_session_key": self.client_session,
+        }
+
+        response = self.session.post(
+            "https://api.myfundedfutures.com/api/createCheckoutSession/",
+            headers=headers,
+            json=json_data,
+        )
+
+        return response.json()["ok"]["public_id"]
+
     async def redeem(self, coupon_code: str, detected_text: str = ""):
         """Asynchronously redeem a coupon code."""
         print(
@@ -180,13 +228,13 @@ class PropSnatch:
         detected_upper = detected_text.upper()
         if "ACCOUNTS" in detected_upper:
             if "50K SCALE" in detected_upper:
-                self.planid = 52
+                self.planid = 58
             elif "100K SCALE" in detected_upper:
-                self.planid = 53
+                self.planid = 57
             elif "150K SCALE" in detected_upper:
-                self.planid = 54
+                self.planid = 56
             elif "50K CORE" in detected_upper:
-                self.planid = 51
+                self.planid = 59
             elif "50K PRO" in detected_upper:
                 self.planid = 48
             elif "100K PRO" in detected_upper:
@@ -203,7 +251,7 @@ class PropSnatch:
             "affiliateId": "",
             "affiliateSource": "",
             "competitionId": None,
-            "couponCode": coupon_code,  # coupon_code
+            "couponCode": coupon_code,
             "isActivation": False,
             "isMarketData": False,
             "isRenewal": False,
@@ -215,6 +263,8 @@ class PropSnatch:
             "selectedPlatform": "TradingView",
             "static_processor_id": 3,
             "subscriptionId": None,
+            "checkout_session_id": self._session(detected_text),
+            "client_session_key": self.client_session,
         }
 
         try:
