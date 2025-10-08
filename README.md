@@ -25,6 +25,8 @@ PropSnatch is an automated tool designed to monitor a specific region of the scr
 -   **Advanced Code Extraction**: A set of optimized, pre-compiled regular expressions are used to instantly identify and extract valid-looking codes from the OCR text.
 -   **Asynchronous Redemption**: Once a new, unique code is found, the tool uses `asyncio` and `httpx` to send a redemption request to the MFFU servers in a non-blocking manner. This allows the screen scanning to continue uninterrupted, ensuring no codes are missed while waiting for a network response.
 
+- I want to further add that MFFU working around with checkout_session_id and client_session_key will not eliminate how easily they can be exploited, for experienced developers like myself, have had updates minutes after the update they pushed backend! MFFU will not be able to fully eliminate risks they have in their API backend, and it'll always be exploitable, I will continue to provide updates until they reach out and ask for help, otherwise there will be an edge for us programmers to make programs such as PropSnatch
+
 ---
 
 ### Keywords
@@ -38,4 +40,5 @@ PropSnatch is an automated tool designed to monitor a specific region of the scr
 This code is being released **as-is**. I have explained its purpose and functionality, but from this point forward, it is now on you to be able to run it.
 
 **I no longer have any involvement in this project.** I will not be providing support, updates, or any further assistance.
+
 
