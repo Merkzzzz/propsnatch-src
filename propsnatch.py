@@ -173,6 +173,18 @@ class PropSnatch:
 
     def _session(self, detected_text: str):
 
+        headers = {
+            "accept": "application/json, text/plain, */*",
+            "accept-language": "en-GB,en;q=0.9,en-US;q=0.8",
+            "content-type": "application/json",
+            "origin": "https://myfundedfutures.com",
+            "priority": "u=1, i",
+            "referer": "https://myfundedfutures.com/",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 Edg/139.0.0.0",
+        }
+
+        self.session.headers.update(headers)
+
         # Determine planid based on detected text
         detected_upper = detected_text.upper()
         if "ACCOUNTS" in detected_upper:
@@ -202,7 +214,6 @@ class PropSnatch:
 
         response = self.session.post(
             "https://api.myfundedfutures.com/api/createCheckoutSession/",
-            headers=headers,
             json=json_data,
         )
 
@@ -223,6 +234,8 @@ class PropSnatch:
             "referer": "https://myfundedfutures.com/",
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 Edg/139.0.0.0",
         }
+
+        self.session.headers.update(headers)
 
         # Determine planid based on detected text
         detected_upper = detected_text.upper()
@@ -270,7 +283,6 @@ class PropSnatch:
         try:
             response = await self.session.post(
                 "https://api.myfundedfutures.com/api/initiateOneTimePayment/",
-                headers=headers,
                 json=json_data,
                 timeout=10.0,
             )
